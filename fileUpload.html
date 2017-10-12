@@ -1,0 +1,37 @@
+<!-- 
+	简单来说，压缩和上传主要分这么几步：
+	给<input type="file">添加onchange事件，在事件回调中获取元素的files属性；
+	创建Image对象，并添加onload事件回调；
+	把File对象（File继承Blob）转化为blob url，并赋给Image对象的src属性
+	在Image对象的onload回调中创建canvas画布，并将图片写入画布
+	通过canvas对象的toDataURL方法，以指定的输出质量生成data url（本质是base64字符串）
+	有了base64，我们就可以通过一定的算法将其还原为二进制对象（Blob对象），或者通过canvas的toBlob来输出blob
+	最后将blob对象append进FormData，通过ajax来post到服务器即可
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片上传</title>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+	<input type="file" name="imgPick" accept="image/png, image/jpeg, image/jpg" id="file">
+	
+	<form action="fileUpload_submit" method="get" accept-charset="utf-8">
+		<label>用户名：<input type="text" name="user" placeholder="请输入用户名"></label>
+		<br>
+		<label>密码：<input type="password" name="pwd" placeholder="请输入密码"></label>
+		<br>
+		<button>登录</button>
+	</form>
+</body>
+</html>
+
+<script type="text/javascript">
+	document.getElementById("file").onchange = function pickImage(event) {
+		console.log(event, 123456)
+	}
+</script>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Flex基本布局演练</title>
+	<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		html, body{
+			width: 100%;
+			height: 100%;
+		}
+		.container{
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+		}
+		.container header{
+			display: flex;
+			justify-content: space-between;
+			padding: 20px;
+			height: 40px;
+			background-color: darkblue;
+		}
+		.container header ul{
+			display: flex;
+			justify-content: space-between;
+			/* align-items: baseline; */
+			list-style: none;
+		}
+		.container header ul li{
+			padding: 10px;
+			margin-right: 10px;
+			height: 40px;
+		}
+		.container header ul li a{
+			display: inline-block;
+			height: 100%;
+			color: #fff;
+			font-size: 16px;
+			line-height: 100%;
+			text-decoration: none;
+			background-color: yellow;
+		}
+		.wrapper{
+			display: flex;
+			flex-direction: row;
+			height: 100%;
+		}
+		.sideBar{
+			flex: 1;
+			background-color: lightcoral;
+		}
+		.sideBar ul{
+			width: 100%;
+			height: 100%;
+			/* border: 1px solid #000; */
+			list-style: none;
+		}
+		.sideBar ul li{
+			height: 35px;
+			border-bottom: 2px solid #8CEB32;
+			font-weight: bold; 
+			padding-left: 20px;
+			line-height: 35px;
+		}
+		.sideBar ul li a{
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			text-decoration: none;
+		}
+		.main{
+			flex: 5;
+			background-color: lightblue;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<header>
+			<nav>
+				<ul>
+					<li><a href="#">Logo</a></li>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Product</a></li>
+					<li><a href="#">Service</a></li>
+					<li><a href="#">About</a></li>
+				</ul>
+			</nav>
+			<button>Connect Us</button>
+		</header>
+		<div class="wrapper">
+			<aside class="sideBar">
+				<ul>
+					<li><a href="#">一</a></li>
+					<li><a href="#">二</a></li>
+					<li><a href="#">三</a></li>
+					<li><a href="#">四</a></li>
+					<li><a href="#">五</a></li>
+				</ul>
+			</aside>
+			<section class="main">
+				
+			</section>
+		</div>
+	</div>
+</body>
+</html>

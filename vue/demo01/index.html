@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Demo1--双向数据绑定</title>
+</head>
+<body>
+	<div id="app">
+		{{message}}
+		<button v-on:click="change">点击逆转消息</button>
+		<input type="text" name="text" v-model="message">
+		<p>组件练习：</p>
+		<todo-item v-bind:todos="todos"></todo-item>
+	</div>
+
+	<script type="text/javascript" src="../../lib/vue.min.js"></script>
+	<script type="text/javascript">
+		var app = new Vue({
+			el: "#app",
+			data: {
+				message: "首汽约车",
+				todos: [
+					{
+						id: 1,
+						text: "调试接口"
+					}
+				]
+			},
+			methods: {
+				change(){
+					this.message = this.message.split("").reverse().join("");
+				}
+			}
+		});
+
+		Vue.component("todo-item", {
+			props: ["todos"],
+			template: "<li>{{todos.text}}</li>"
+		});
+	</script>
+</body>
+</html>
