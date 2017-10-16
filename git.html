@@ -18,8 +18,13 @@
 		<li>9、git rm filename 删除文件</li>
 		<li>10、git remote add origin git@github.com:wangweiwg/filename.git 把本地创库添加到远程仓库（把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。git push -u origin master, 之后每次提交使用git push origin master）</li>
 		<li>git clone 克隆远程仓库的项目</li>
-		<li>git branch</li>
-		<li></li>
+		<li>git branch dev 创建新的分支 dev</li>
+		<li>git checkout dev 切换到dev分支</li>
+		<li>git merge dev 把dev分支合并到当前分支</li>
+		<li>git branch -d dev 删除dev分支</li>
+		<li>当同时修改一个文件的时候会出现冲突，要手动解决，解决完之后再提交一次就好了</li>
+		<li>git log --graph 命令可以看到分支合并图。（git log --graph --pretty=oneline --abbrev-commit）</li>
+		<li>该学习分支管理策略了</li>
 	</ul>
 </body>
 </html>
