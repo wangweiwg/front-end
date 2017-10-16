@@ -6,16 +6,20 @@
 </head>
 <body>
 	<ul>
+		<li><h1>下面的filename均指文件名：</h1></li>
 		<li>1、git是分布式版本管理系统</li>	
 		<li>2、配置：git config --global user.name/email ***</li>
 		<li>3、git add . 和 git add filename添加的暂存区</li>
 		<li>4、git commit -m "comments" 提交代码</li>
-		<li>5、git log 查看提交的记录(git log --pretty=oneline)</li>
+		<li>5、git log / git reflog 查看提交的记录(git log --pretty=oneline)</li>
 		<li>6、git reset --hard HEAD^ / HEAD^^ / HEAD~100 版本回退</li>
-		<li>7、</li>
-		<li>8、</li>
-		<li>9、</li>
-		<li>10、</li>
+		<li>7、git diff HEAD -- readme.txt 查看readme.txt文件工作区和版本库里面最新版本的区别</li>
+		<li>8、git checkout -- filename 撤销工作区的修改，里面的--要加，要不然成了切换分支了（git reset HEAD file同样也可是实现类似效果，git reset可以把暂存区的修改回退到工作区）</li>
+		<li>9、git rm filename 删除文件</li>
+		<li>10、git remote add origin git@github.com:wangweiwg/filename.git 把本地创库添加到远程仓库（把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。git push -u origin master, 之后每次提交使用git push origin master）</li>
+		<li>git clone 克隆远程仓库的项目</li>
+		<li>git branch</li>
+		<li></li>
 	</ul>
 </body>
 </html>
