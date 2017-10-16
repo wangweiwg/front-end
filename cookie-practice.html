@@ -7,6 +7,58 @@
 <body>
 	<!-- 学习博客地址 -->
 	<!-- http://www.cnblogs.com/flyromance/articles/5027947.html -->
-	
+	<button id="local">localStroge存储</button>
+	<button id="session">sessionStroge存储</button>
+	<button id="set">设置cookie</button>
+	<button id="get">获取cookie</button>
 </body>
 </html>
+
+<script type="text/javascript">
+// 主要有以下方法
+// setItem
+// getItem
+// removeItem
+	document.getElementById("local").onclick = function(){
+		var people = {
+			name: "xiaoming",
+			age: 20,
+			sex: "男"
+		};
+		// console.log(JSON.stringify(people), 1);
+		var temp = encodeURIComponent(JSON.stringify(people));
+		// console.log(temp, typeof temp, 2)
+		// console.log(decodeURIComponent(temp), typeof decodeURIComponent(temp), typeof JSON.parse(decodeURIComponent(temp)), 3)
+		localStorage.setItem("people", temp);
+	};
+
+	document.getElementById("session").onclick = function(){
+
+	};
+
+	document.getElementById("set").onclick = function(){
+
+	};
+
+	document.getElementById("get").onclick = function(name){
+		
+	};
+
+	// 设置cookie
+	function setCookie(name, value, iday){
+		var odate = new new Date();
+		odate.setDate(odate.getDate() + iday);
+		document.cookie = name + value + ";expires=" + odate;
+	};
+	// 获取cookie的值
+	function getcookie(name){
+		var cookies = document.cookie.split(";");
+		for (var i = 0; i < cookies.length; i++) {
+			var keyValues = cookies[i].split("=");
+			if (keyValues[0] == name) {
+				return keyValues[1];
+			}
+		}
+		return false;
+	};
+</script>
