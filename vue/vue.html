@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue基础</title>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li><h3>Vue基础</h3></li>
+			<li>概念：{{message}}</li>
+		</ul>	
+	</div>
+	<script src="https://unpkg.com/vue"></script>
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: {
+				message: 'Vue.js是一套构建用户界面的渐进式框架。'
+			}
+		});
+	</script>
+</body>
+</html>
