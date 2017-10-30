@@ -3,12 +3,48 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Vue基础</title>
+	<style type="text/css">
+		.red{
+			background-color: red;
+		}
+		.green{
+			background-color: green;
+		}
+	</style>
 </head>
 <body>
 	<div id="app">
 		<ul>
-			<li><h3>Vue基础</h3></li>
-			<li>概念：{{message}}</li>
+			<li><h3 v-bind:class='{red}'>Vue基础</h3></li>
+			<li v-bind:class="{'green' : isGreen}">概念：{{message}}</li>
+			<li>指令练习：<button v-on:click='toogle'>切换</button></li>
+			<p>
+				<span v-if='flag'>显示</span>
+				<span v-else>隐藏</span>
+			</p>
+			<li><button @click='tooglePara'>切换段落</button></li>
+			<p>
+				<h5 v-if='type == 1'>我是段落一</h5>
+				<h5 v-else-if='type == 2'>我是段落二</h5>
+				<h5 v-else-if='type == 3'>我是段落三</h5>
+				<h5 v-else-if='type == 4'>我是段落四</h5>
+				<h5 v-else>我是段落五</h5>
+			</p>
+			<p>
+				<input v-model='sex' type="radio" name="sex" value='男'>男
+				<input v-model='sex' type="radio" name="sex" value='女'>女
+				性别：{{sex}}
+			</p>
+			<p>
+				<input v-model='hobby' type="checkbox" name="hobby" value="篮球">篮球
+				<input v-model='hobby' type="checkbox" name="hobby" value="足球">足球
+				<input v-model='hobby' type="checkbox" name="hobby" value="乒乓球">乒乓球
+				爱好：{{hobby}}
+			</p>
+			<input type="text" ref='text' placeholder="请输入内容" v-on:keyup='keyup'>
+			<ul>
+				<li v-for='num in 3'>{{num}}</li>
+			</ul>
 		</ul>	
 	</div>
 	<script src="https://unpkg.com/vue"></script>
@@ -16,7 +52,28 @@
 		var app = new Vue({
 			el: '#app',
 			data: {
-				message: 'Vue.js是一套构建用户界面的渐进式框架。'
+				message: 'Vue.js是一套构建用户界面的渐进式框架。',
+				flag: false,
+				type: 1,
+				sex: '男',
+				hobby: [],
+				red: true,
+				isGreen: true
+			},
+			methods: {
+				toogle(){
+					this.flag = !this.flag;
+					console.log(this.flag);
+				},
+				tooglePara(){
+					this.type++;
+					if (this.type > 5) {
+						this.type = 1;
+					}
+				},
+				keyup(){
+					console.log(this.$refs.text.value)
+				}
 			}
 		});
 	</script>
