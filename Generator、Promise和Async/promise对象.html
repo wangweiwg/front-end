@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Promise对象</title>
+</head>
+<body>
+	<!-- Promise是异步编程的一种解决方案，比传统的解决方案--回调函数和事件--更加合理和强大 -->
+	<!-- 所谓Promise，简单说就是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。 -->
+
+	<!-- Promise.all方法用于将多个Promise实例，包装成一个新的Promise实例 -->
+</body>
+<script type="text/javascript">
+	let a = 0;
+	let timer = setInterval(() => {
+		a += 10;
+		console.log('a---', a)
+	}, 2000);
+
+	function runAsync () {
+		return new Promise((resolve, reject) => {
+			setInterval(() => {
+				if (a == 10) {
+					resolve(a);
+				} else {
+					reject(a);
+				}
+			}, 2000);
+		});
+	}
+
+	runAsync()
+	.then((resolveData) => {
+		console.log('resolveData1---', resolveData)
+		return runAsync();
+	}, (rejectData) => {
+		console.log('rejectData1---', rejectData)
+	})
+	.then((resolveData) => {
+		console.log('resolveData2---', resolveData)
+		clearInterval(timer);
+	}, (rejectData) => {
+		console.log('rejectData2---', rejectData)
+		clearInterval(timer);
+	}).catch(error => {
+		console.log('出现异常了---')
+	})
+
+
+	let promise = new Promise(function(resolve, reject) {
+		console.log('new Promise')
+		resolve();
+	});
+
+	promise.then(function() {
+		console.log('resolved--')
+	})
+
+	var obj = {
+		a: 1,
+		b: 2,
+		c: 3
+	}
+	for (key in obj) {
+		console.log(key)
+	}
+</script>
+</html>
