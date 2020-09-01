@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">	
+		h1 {
+			font-size: .2rem;
+			text-align: center;
+		}
+		#test, #info {
+			font-size: .35rem;
+		}
+
+		#test {
+			margin-top: 2rem;
+			border: .01rem solid red;
+			height: 3rem;
+		}
+
+		#error {
+			margin-top: 2rem;
+			border: .01rem solid red;
+			height: 3rem;
+		}
+	</style>
+</head>
+<body>
+	<h1>测试浏览器</h1>
+	<div id="info"></div>
+	<div id="test"></div>
+	<div id="error"></div>
+
+	<script type="text/javascript" src='./JS/rem.js'></script>
+	<script type="text/javascript" src='./JS/tools.js'></script>
+	<script type="text/javascript">
+		// isWeiChat()
+		try {
+			if (isWeiChat()) {
+				document.getElementById('test').innerHTML = '抱歉暂时不支持微信浏览器打开'
+
+				throw new Error('WX')
+			}else if (isAliPay()) {
+				document.getElementById('test').innerHTML = '抱歉暂时不支持支付宝浏览器打开'
+			}else if (isQQBrowser()) {
+				document.getElementById('test').innerHTML = '抱歉暂时不支持QQ浏览器打开'
+			}else {
+				document.getElementById('test').innerHTML = '未知浏览器，请更换！'
+			}
+
+			throw new Error({'name' : 'wangwei'})
+		} catch(e) {
+			console.log(e.name);
+			document.getElementById('error').innerHTML = e
+		}
+
+	</script>
+</body>
+</html>

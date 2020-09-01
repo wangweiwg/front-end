@@ -1,0 +1,20 @@
+<!--index.wxml-->
+<view class="container">
+    <view class="userinfo">
+        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+        <block wx:else>
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+            <text class="introduce">{{signature}}</text>
+            <button bindtap="changeSignature">点击设置签名信息</button>
+            <button bindtap="longTap">长按</button>
+        </block>
+        <block wx:for="{{dataArr}}" wx:for-item="item">
+            <text>{{index}}--{{item.id}}--{{item.name}}</text>
+        </block>
+    </view>
+    <view class="usermotto">
+        <text wx:if="{{motto == 'Hello World'}}" class="user-motto">{{signature}}</text>
+        <text wx:else class="user-motto">{{motto}}</text>
+    </view>
+</view>

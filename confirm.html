@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>confirm弹框测试</title>
+</head>
+<body>
+	<button>弹出</button>
+</body>
+<script type="text/javascript">
+	document.getElementsByTagName('button')[0].onclick = function () {
+		if (confirm("确定要执行吗？", 'OK', 'Cancel')) {
+			alert('执行了')
+		} else {
+			alert('没有执行')
+		}
+	}
+</script>
+</html>

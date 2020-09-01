@@ -63,5 +63,9 @@
 	for (key in obj) {
 		console.log(key)
 	}
+	var p = Promise.resolve(obj);
+	p.then(result => {
+		console.log('结果是---', result)
+	}); 
 </script>
 </html>

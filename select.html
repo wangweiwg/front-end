@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>select标签操作</title>
+</head>
+<body>
+	<h1>城市列表</h1>
+	<select name="city" id="city">
+		<option value="10">北京</option>
+		<option value="11">上海</option>
+		<option value="12">广州</option>
+	</select>
+
+	<h2>手动设置</h2>
+	<h2 class="show">选中的城市value为：</h2>
+	<button class="btn1">点击选择北京</button>
+	<button class="btn2">点击选择上海</button>
+	<button class="btn3">点击选择广州</button>
+</body>
+<script>
+	document.getElementsByClassName('btn1')[0].onclick = function () {
+		document.getElementById('city').value = '10'
+		document.getElementsByClassName('show')[0].innerHTML = '选中的城市value为：10'
+	}
+
+	document.getElementsByClassName('btn2')[0].onclick = function () {
+		document.getElementById('city').value = '11'
+		document.getElementsByClassName('show')[0].innerHTML = '选中的城市value为：11'
+	}
+
+	document.getElementsByClassName('btn3')[0].onclick = function () {
+		document.getElementById('city').value = '12'
+		document.getElementsByClassName('show')[0].innerHTML = '选中的城市value为：12'
+	}
+</script>
+</html>

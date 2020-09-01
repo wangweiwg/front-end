@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>测试HTML内部嵌入React 组件</title>
+	<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+	<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+	<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+	<div id="example"></div>
+</body>
+<script type="text/babel">
+	class List extends React.Component {
+		constructor (props) {
+			super(props)
+			this.state = {
+				text: '',
+				list: [{id: 1, value: '张三'}, {id: 2, value: '李四'}]
+			}
+			this.contentChange = this.contentChange.bind(this)
+			this.submitValue = this.submitValue.bind(this)
+		}
+
+		contentChange (e) {
+			this.setState({text: e.target.value})
+		}
+
+		submitValue (e) {
+			console.log(this.state.text)
+		}
+
+		render () {
+			return (
+				<ul>
+					<p>请输入需要做的事情</p>
+					<input type="text" name="name" onChange={this.contentChange} />
+					<input type="submit" value="提交" onClick={this.submitValue} />
+					{
+						this.state.list.map((item, key) => {
+							return <li key={key}>{item.value}</li>
+						})
+					}
+				</ul>
+			)
+		}
+	}
+
+	ReactDOM.render(
+		<List />,
+		document.getElementById('example')
+	)
+</script>
+</html>

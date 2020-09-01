@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>测试本地存储IndexDB</title>
+	
+</head>
+<body>
+	<div>
+		<p>id：<input id="idKey" type="text" placeholder="请输入id"></p>
+		<p>姓名：<input id="name" type="text" placeholder="请输入姓名"></p>
+		<p>性别：<input id="age" type="text" placeholder="请输入性别"</p>
+		<p>年龄：<input id="sex" type="text" placeholder="请输入年龄"></p>
+		<button id="add">添加</button>
+		<button id="update">更改信息</button>
+	</div>
+
+	<div>
+		<p>请输入要删除的id：<input id="delId" type="text" placeholder="请输入要删除的id"></p>
+		<button id="del">刪除</button>
+		<button id="read">读取</button>
+	</div>
+	
+	<div>
+		<hr>
+		<button id="readAll">读取所有</button>
+	</div>
+
+	<script type="text/javascript">
+		window.onload= function () {
+			var request = window.indexedDB.open('person');
+			var db = null;
+			var objectStore = null;
+
+			request.onerror = function(event) {
+				console.log('数据库打开报错----');
+			};
+
+			request.onsuccess = function(event) {
+				db = event.target.result;
+				console.log('数据库打开成功---', event, 'db----', db);
+			};
+
+			request.onupgradeneeded = function(event) {
+				console.log('onupgradeneeded---', event);
+				db = event.target.result;
+				if (!db.objectStoreNames.contains('person')) {
+					objectStore = db.createObjectStore('person', { keyPath: 'id' });
+				}
+				objectStore.createIndex('name', 'name', { unique: false });
+			};
+
+			// 添加
+			function add(obj) {
+				var requestAdd = db.transaction(['person'], 'readwrite')
+				.objectStore('person')
+				.add({ id: obj.id, name: obj.name, age: obj.age});
+
+				requestAdd.onsuccess = function (event) {
+					console.log('数据写入成功---');
+				};
+
+				requestAdd.onerror = function (event) {
+					console.log('数据写入失败---');
+				}
+			}
+			// 删除
+			function del(id) {
+				var request = db.transaction(['person'], 'readwrite')
+					.objectStore('person')
+					.delete(id);
+
+				request.onsuccess = function (event) {
+					console.log('数据删除成功');
+				};
+			}
+			// 更改
+			function update(obj) {
+			  	var request = db.transaction(['person'], 'readwrite')
+			    	.objectStore('person')
+				    .put({ id: obj.id, name: obj.name, age: obj.age});
+
+			  	request.onsuccess = function (event) {
+			    	console.log('数据更新成功');
+				};
+
+			  	request.onerror = function (event) {
+			    	console.log('数据更新失败');
+			  	}
+			}
+			// 查找
+			function read(id) {
+			   	var transaction = db.transaction(['person']);
+			   	var objectStore = transaction.objectStore('person');
+			   	var requestSearch = objectStore.get(id);
+
+			   	requestSearch.onerror = function(event) {
+			     	console.log('读取事务失败---');
+			   	};
+
+				requestSearch.onsuccess = function(event) {
+			      	if (requestSearch.result) {
+				        console.log(`读取成功---Id：${requestSearch.result.id}	Name：${requestSearch.result.name}	Age：${requestSearch.result.age}		email：${requestSearch.result.email}`);
+			      	} else {
+			        	console.log('未获得数据记录');
+			      	}
+			   	};
+			}
+			// 查找所有的
+			function readAll() {
+			  	var objectStore = db.transaction('person').objectStore('person');
+			   	objectStore.openCursor().onsuccess = function (event) {
+			    	var cursor = event.target.result;
+					if (cursor) {
+						console.table(`Id：${cursor.value.id}		Name：${cursor.value.name}		Age：${cursor.value.age}		email：${cursor.value.email}`);
+						cursor.continue();
+					} else {
+						console.log('没有更多数据了！');
+					}
+			  	};
+			}
+
+			function getInputValue() {
+				var id = document.getElementById('idKey').value;
+				var name = document.getElementById('name').value;
+				var age = document.getElementById('age').value;
+				var sex = document.getElementById('sex').value;
+				return {id: id, name: name, age: age, sex: sex};
+			}
+
+			document.getElementById('add').onclick = function() {
+				console.log('add');
+				var inputInfo = getInputValue();
+				add(inputInfo);
+			}
+			document.getElementById('del').onclick = function() {
+				console.log('del');
+				del(parseInt(document.getElementById('delId').value));
+			}
+			document.getElementById('update').onclick = function() {
+				console.log('update');
+				update();
+			}
+			document.getElementById('read').onclick = function() {
+				console.log('read');
+				read(parseInt(document.getElementById('delId').value));
+			}
+			document.getElementById('readAll').onclick = function() {
+				console.log('readAll');
+				readAll();
+			}
+		}
+	</script>
+</body>
+</html>

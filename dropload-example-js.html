@@ -1,0 +1,262 @@
+
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+    <title>加载顶部、底部</title>
+    <style>
+    *{
+        margin: 0;
+        padding:0;
+        -webkit-tap-highlight-color:rgba(0,0,0,0);
+        -webkit-text-size-adjust:none;
+    }
+    html{
+        font-size:10px;
+    }
+    body{
+        background-color: #f5f5f5;
+        font-size: 1.2em;
+    }
+    .header{
+        height: 44px;
+        line-height: 44px;
+        border-bottom: 1px solid #ccc;
+        background-color: #eee;
+    }
+    .header h1{
+        text-align: center;
+        font-size: 2rem;
+        font-weight: normal;
+    }
+    .content{
+        padding-bottom: 40px;
+        background-color: #fff;
+    }
+    .content .item{
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align:center;
+        -webkit-box-align:center;
+        box-align:center;
+        -webkit-align-items:center;
+        align-items:center;
+        padding:3.125%;
+        border-bottom: 1px solid #ddd;
+        color: #333;
+        text-decoration: none;
+    }
+    .content .item img{
+        display: block;
+        width: 40px;
+        height: 40px;
+        border:1px solid #ddd;
+    }
+    .content .item h3{
+        display: block;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        width: 100%;
+        max-height: 40px;
+        overflow: hidden;
+        line-height: 20px;
+        margin: 0 10px;
+        font-size: 1.2rem;
+    }
+    .content .item .date{
+        display: block;
+        height: 20px;
+        line-height: 20px;
+        color: #999;
+    }
+    .opacity{
+        -webkit-animation: opacity 0.3s linear;
+        animation: opacity 0.3s linear;
+    }
+    @-webkit-keyframes opacity {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+    @keyframes opacity {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+    .footer{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        width: 100%;
+        height: 40px;
+    }
+    .footer a{
+        position: relative;
+        display: block;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        line-height: 40px;
+        text-align: center;
+        color: #666;
+        background-color: #eee;
+        text-decoration: none;
+    }
+    .footer a:before{
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 10px;
+        width: 1px;
+        height: 20px;
+        background-color: #ccc;
+    }
+    .footer a:first-child:before{
+        display: none;
+    }
+    </style>
+    <link rel="stylesheet" href="./css/dropload.css">
+</head>
+<body>
+	<a href='javascript:call_1()'> 当前数据 </a> <a href='javascript:call_2()'> 历史数据 </a>
+	<div class="header">
+		<h1>就当我是新闻页吧</h1>
+	</div>
+	<div class="content" id="j-hasData1" style="display: none;">
+		<div class="lists1">
+			
+		</div>
+	</div>
+	<div class="content" id="j-hasData2" style="display: none;">
+		<div class="lists2">
+			
+		</div>
+	</div>
+<!-- jQuery1.7以上 或者 Zepto 二选一，不要同时都引用 -->
+<script src="./js/c.jquery1.8.3.min.js"></script>
+<script src="./js/c.dropload.source.js"></script>
+<script src="./js/c.data.droploader.js"></script>
+
+<script>
+
+
+
+var call_1 = function () {
+	$('#j-hasData1').show();
+	$('#j-hasData2').hide();
+	var loaderOptions = {
+		handler: $('#j-hasData1'),
+		listContainer: $('.lists1'),
+		domDown: {
+			domRefresh: '<div class="dropload-refresh">↑上拉加载更多11111</div>',
+			domLoad: '<div class="dropload-load"><span class="loading"></span>数据加载中11111...</div>',
+			domNoData: '<div class="dropload-noData">没有更多数据了11111</div>'
+		},
+		hasDataCall: function (page , ret) {
+			var render = function(data){
+				var result = ''
+				for(var i=0; i<data.length; i++){
+					result +=   '<a class="item opacity">'
+									+'<h3>'+data[i].activityName+'</h3>'
+									+'<span class="date">'+data[i].activityId+'</span>'
+								+'</a>';
+				}
+				return result
+			}
+			var resultHtml = render(ret.data)
+			
+			if(page == 1){ //默认读第一页数据时，先清空dom
+				$('.lists1').empty().append(resultHtml);
+			}else{//否则数据追加在dom上
+				$('.lists1').append(resultHtml);
+			}
+		},
+		noDataCall: function (page , ret) {
+			if(page == 1){ //默认读第一页数据时，先清空dom
+				$('.lists1').empty()
+			}
+		},
+		errorCall: ''
+	}
+	var ajaxOptions = {
+		//url: 'http://testzc.01zhuanche.com:18105/gw-driver-wap/driver-numprize/historylist',
+		url: 'http://testzc.01zhuanche.com:18105/gw-driver-wap/driver-numprize/inlist',
+		type: 'post',
+		data: {
+			pageNo: 1,
+			pageSize: 5,
+			driverId:1000063
+		},
+		dataType: 'json'
+	}
+	new createDataDroploader(loaderOptions, ajaxOptions).dropload()
+}
+var call_2 = function () {
+	$('#j-hasData2').show();
+	$('#j-hasData1').hide();
+	var loaderOptions = {
+		handler: $('#j-hasData2'),
+		listContainer: $('.lists2'),
+		domDown: {
+			domRefresh: '<div class="dropload-refresh">↑上拉加载更多2</div>',
+			domLoad: '<div class="dropload-load"><span class="loading"></span>数据加载中2...</div>',
+			domNoData: '<div class="dropload-noData">没有更多数据了2</div>'
+		},
+		hasDataCall: function (page , ret) {
+			var render = function(data){
+				var result = ''
+				for(var i=0; i<data.length; i++){
+					result +=   '<a class="item opacity">'
+									+'<h3>'+data[i].activityName+'</h3>'
+									+'<span class="date">'+data[i].activityId+'</span>'
+								+'</a>';
+				}
+				return result
+			}
+			var resultHtml = render(ret.data)
+			
+			if(page == 1){ //默认读第一页数据时，先清空dom
+				$('.lists2').empty().append(resultHtml);
+			}else{//否则数据追加在dom上
+				$('.lists2').append(resultHtml);
+			}
+		},
+		noDataCall: function (page , ret) {
+			if(page == 1){ //默认读第一页数据时，先清空dom
+				$('.lists2').empty()
+			}
+		},
+		errorCall: ''
+	}
+	var ajaxOptions = {
+		url: 'http://testzc.01zhuanche.com:18105/gw-driver-wap/driver-numprize/historylist',
+		//url: 'http://testzc.01zhuanche.com:18105/gw-driver-wap/driver-numprize/inlist',
+		type: 'post',
+		data: {
+			pageNo: 1,
+			pageSize: 5,
+			driverId:1000063
+		},
+		dataType: 'json'
+	}
+	new createDataDroploader(loaderOptions, ajaxOptions).dropload()
+}
+
+</script>
+</body>
+</html>

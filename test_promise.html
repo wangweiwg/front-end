@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>测试Promise兼容</title>
+	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+	<!-- <script type="text/javascript" src ="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6"></script> -->
+</head>
+<body>
+	<h3>使用polyfill对Promise处理之后，适用于IE9及以上版本</h3>
+	<script type="text/javascript">
+		var p1 = new Promise(function (resolve, rejected) {
+			var randomNum = Math.floor(Math.random() * 100 + 1);
+			console.log('11获取到的随机数是：', randomNum)
+			if (randomNum % 2 == 0) {
+				resolve('11成功了')
+			} else if (randomNum % 2 == 1) {
+				rejected('11失败了')
+			}
+		})
+
+		var p2 = new Promise(function (resolve, rejected) {
+			var randomNum = Math.floor(Math.random() * 100 + 1);
+			console.log('22获取到的随机数是：', randomNum)
+			if (randomNum % 2 == 0) {
+				resolve(['22成功了', '2222成功了'])
+			} else if (randomNum % 2 == 1) {
+				rejected('22失败了')
+			}
+		})
+
+		var p3 = new Promise(function (resolve, rejected) {
+			var randomNum = Math.floor(Math.random() * 100 + 1);
+			console.log('33获取到的随机数是：', randomNum)
+			if (randomNum % 2 == 0) {
+				resolve('33成功了')
+			} else if (randomNum % 2 == 1) {
+				rejected('33失败了')
+			}
+		})
+
+		Promise.all([p1, p2, p3]).then(function (success) {
+			console.log('所有的成功了', success)
+		}, function (failed) {
+			console.log('出现失败时--', failed)
+		}).catch(function (error) {
+			console.log('异常处理--', error)
+		})
+	</script>
+</body>
+</html>

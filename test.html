@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #content {
+        width: 500px;
+        height: 200px;
+        border: 5px solid yellowgreen;
+        margin: 100px auto;
+    }
+
+    #content p {
+        width: 100%;
+        height: auto;
+        min-height: 45px;
+        padding-left: 10px;
+        font-weight: bold;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="content">测试</div>
+</body>
+<script type="text/javascript">
+var data = [
+    '一、你是不是傻Y？',
+    '二、这都不会M？',
+    '三、还能不能搞SQ呀？',
+    '四、凡事要学会变通的Y？',
+    '五、大哥，这下懂了不？',
+    '六、就随便给你搞一下H',
+    '七、这样算是OK吗？'
+];
+
+// 动态创建内容
+function setContent(arr) {
+    var circelTimes = arr.length - num > 0 && arr.length - num < 3 ? arr.length - num : 3;
+    var tempStr = '';
+    for (var i = 0; i < circelTimes; i++) {
+        tempStr += `<p>${arr[num + i]}</p>`;
+    }
+    return tempStr;
+}
+
+// 获取到内容区域的父节点
+var obj = document.getElementById('content');
+
+// 用来计算执行的次数，默认是0
+var num = 0;
+
+// 首先设置默认的显示值
+obj.innerHTML = setContent(data);
+
+// 设置定时器，定时去更新内容
+var timer = setInterval(function() {
+    num += 3;
+    if (num > data.length) num = 0
+    obj.innerHTML = setContent(data);
+}, 5000);
+</script>
+
+</html>

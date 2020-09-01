@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>上传、预览、裁切</title>
+	<style>
+		#inputFile {
+			width: 350px;
+			height: 230px;
+		    border: 1px solid red;
+		    font-size: 0px;
+		    text-indent: -99987px;
+		}
+		img {
+			position: absolute;
+			top: 22px;
+			left: 105px;
+			width: 350px;
+			height: 230px;
+		}
+	</style>
+</head>
+<body>
+	请选择文件：<input id="inputFile" type="file">
+	<div>
+		<p>
+			文件大小：<span id="size"></span>
+		</p>
+		<p>
+			进程：<span id="process"></span>
+		</p>
+	</div>
+	<canvas id="myCanvas"></canvas>
+</body>
+<script type="text/javascript">
+	// 获取输入框对象
+	var inputO = document.getElementById('inputFile')
+
+	// 文件加载完执行的事件
+	inputO.onchange = function (event) {
+		if (event.target.files.length > 0) {
+			// 文件
+			var file = event.target.files[0]
+			console.log('文件：', event.target.files[0])
+
+			// 设置文件大小
+			document.getElementById('size').innerHTML = Math.round(file.size / 1024) + 'KB';
+
+			// 文件类型
+			var type = file.type.split('/')[0]
+
+			// 读取文件
+			var reader = new FileReader(); //新建FileReader对象
+			reader.readAsDataURL(file); //读取为base64
+		    //开始读取
+		    reader.onloadstart = function() {
+		        console.log('onloadstart');
+		    };
+		    //	进程
+		    // 这个是定时触发的事件，文件较大的时候较明显
+		    reader.onprogress = function(event) {
+		    	if (event.loaded / event.total < 1) {
+		    		document.getElementById('process').innerHTML = Number((event.loaded / event.total) * 100).toFixed(2);
+		    	} else if (event.loaded / event.total == 1) {
+		    		document.getElementById('process').innerHTML = '100%';
+		    	}
+			    // console.log('onprogress：', Number((event.loaded / event.total) * 100).toFixed(2) + '%');
+		    };
+		    // 中断时调用
+		    reader.onabort = function(){
+		        console.log('onabort');
+		    };
+		    // 出错时调用
+		    reader.onerror = function(){
+		        console.log('onerror');
+		    };
+		    // 读取成功时
+			reader.onload = function() {
+				console.log('onload')
+				if (type == 'image') {
+					console.log('图片')
+					var image = new Image()
+					image.src = reader.result
+					image.setAttribute('id', 'picture')
+					document.body.appendChild(image)
+
+					var myCanvas = document.getElementById('myCanvas');
+					var context = myCanvas.getContext()
+				} else {
+					console.log('文件类型：', type)
+				}
+			}
+		    //	预览代码，没在onload里面写的原因是我不想
+		    //	读取完成时调用
+		    reader.onloadend = function (e) {
+		    	console.log('onloadend')
+			};
+			
+			console.log('读取的文件：', reader)
+
+			var myForm = new FormData();
+			var imageData = 
+		}
+	}
+</script>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+	<link rel="stylesheet" type="text/css" href="./JS/mescroll.min.css">
+	<script type="text/javascript" src="./JS/rem.js"></script>
+	<script type="text/javascript" src="./JS/mescroll.min.js"></script>
+	<script type="text/javascript" src="./lib/vue.min.js"></script>
+	<script type="text/javascript" src="./lib/jquery-3.2.1.min.js"></script>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html, body, #app {
+			width: 100%;
+			height: 100%;
+			font-size: 0.12rem;
+		}
+		.header {
+			height: 0.88rem;
+			line-height: 0.88rem;
+		}
+		.header span {
+			float: left;
+			padding: 0 30px;
+		}
+		.header span.on {
+			background-color: lightgrey;
+			border-bottom: 1px solid red;
+			box-sizing: border-box;
+		}
+		.mescroll {
+			position: relative;
+			width: 100%;
+			height: calc(100% - 0.88rem);
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<header class="header">
+			<span :class="{on: tab == 0}" @click="changeTab(0)">男士</span>
+			<span :class="{on: tab == 1}" @click="changeTab(1)">女士</span>
+		</header>
+		<!-- id可以改,而"mescroll"的class不能删 -->
+		<div id="mescroll" class="mescroll"> 
+	   		<!--  这个div不能删, 可以改成ul或者其他容器标签. -->
+	   		<ul>
+		       	 
+    		</ul>
+    	</div>
+	</div>
+</body>
+<script type="text/javascript">
+	new Vue({
+		el: '#app',
+		data: {
+			tab: 0,
+			dataList: []
+		},
+		methods: {
+			changeTab: function (index) {
+				this.tab = index
+			}
+		},
+		mounted: function () {
+			
+		}
+	})
+</script>
+</html>

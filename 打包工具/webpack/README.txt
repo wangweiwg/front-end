@@ -1,0 +1,3 @@
+webpack学习：
+1、webpack的核心是commonJS的标准模块化。commonJS的模块化是怎样定义的吗？其实主要是两个关键字：exports和require。exports是输出模块；而require是加载模块。这两个关键字，浏览器是无法解析的，这就需要webpack做转换处理。
+2、

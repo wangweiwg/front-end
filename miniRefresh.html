@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+	<script type="text/javascript" src="./JS/rem.js"></script>
+	<link rel="stylesheet" type="text/css" href="./JS/minirefresh.min.css" />
+	<script type="text/javascript" src="./JS/minirefresh.min.js"></script>
+	<script type="text/javascript" src="./lib/vue.min.js"></script>
+	<script type="text/javascript" src="./lib/jquery-3.2.1.min.js"></script>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html, body {
+			width: 100%;
+			height: 100%;
+		}
+		header {
+			height: 0.44rem;
+			line-height: 0.44rem;
+			font-size: 0.12rem;
+			background-color: #e0e0e0;
+		}
+		header p {
+			float: left;
+			padding: 0rem 0.2rem;
+			height: 0.43rem;
+			box-sizing: border-box;
+		}
+		header p.on {
+			border-bottom: 1px solid red;
+		}
+		#minirefresh {
+			top: 0.44rem;
+		}
+		#minirefresh .minirefresh-scroll .list {
+			width: 100%;
+			height: 100%;
+		}
+		#minirefresh .minirefresh-scroll .list li {
+			height: 1rem;
+			line-height: 1rem;
+			font-size: 0.12rem;
+			padding: 0.1rem;
+			border-bottom: 1px solid lightgray;
+			box-sizing: border-box;
+		}
+		#minirefresh .minirefresh-scroll .list li span {
+			float: left;
+			line-height: 0.8rem;
+			height: 0.8rem;
+			margin-right: 0.4rem;
+		}
+		#minirefresh .minirefresh-scroll .list li .photo {
+			width: 0.8rem;
+			border-radius: 100%;
+			background-color: lightgray;
+		}
+		.minirefresh-upwrap {
+			height: 0.4rem;
+			line-height: 0.4rem;
+			min-height: 0.4rem;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<header>
+			<p :class="{on: tab == 0}" @click="changeTab(0)">测试一</p>
+			<p :class="{on: tab == 1}" @click="changeTab(1)">测试二</p>{{tab}}
+		</header>
+		<div id="minirefresh" class="minirefresh-wrap">
+		    <div class="minirefresh-scroll">
+		    	<ul class="list">
+		    		<li v-for="(person, key) in list">
+		    			<span class="photo"></span>
+		    			<span class="name">{{person.name}}</span>
+		    			<span class="phone">{{person.phone}}</span>
+		    		</li>
+		    	</ul>
+		    </div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	new Vue({
+		el: '#app',
+		data: {
+			tab: 0,
+			minirefresh: null,
+			list: [],
+			page: 1
+		},
+		methods: {
+			createRefreshObj () {
+				var self = this
+				self.minirefresh = new MiniRefresh({
+				    container: '#minirefresh',
+				    down: {
+				    	isAuto: true,
+				        callback: self.downCallback
+				    },
+				    up: {
+				    	// isAuto: true,
+				        callback: self.upCallback
+				    }
+				});
+			},
+			downCallback () {
+				// 下拉事件
+				console.log('下拉。。')
+				var self = this
+				setTimeout(function () {
+					self.list = [
+						{id: 1, name: '小明1', phone: 15356183205},
+						{id: 2, name: '小明2', phone: 15356183205},
+						{id: 3, name: '小明3', phone: 15356183205},
+						{id: 4, name: '小明4', phone: 15356183205},
+						{id: 5, name: '小明5', phone: 15356183205},
+						{id: 6, name: '小明6', phone: 15356183205},
+						{id: 7, name: '小明7', phone: 15356183205},
+						{id: 8, name: '小明8', phone: 15356183205},
+						{id: 9, name: '小明9', phone: 15356183205},
+						{id: 10, name: '小明10', phone: 15356183205}
+					]
+					self.minirefresh.endDownLoading(true, '成功更新10条数据');
+				}, 500)
+			},
+			upCallback () {
+				// 上拉事件
+				console.log('上拉事件。。')
+				var self = this;
+				setTimeout(function () {
+					self.list = self.list.concat([
+						{id: 111, name: '小明111', phone: 15356183205},
+						{id: 112, name: '小明211', phone: 15356183205},
+						{id: 113, name: '小明311', phone: 15356183205},
+						{id: 114, name: '小明411', phone: 15356183205}
+					])
+					console.log(self.list)
+					// self.minirefresh.endUpLoading(false);
+				}, 500)
+			},
+			changeTab (index) {
+				this.tab = index
+			}
+		},
+		mounted () {
+			this.createRefreshObj()
+		}
+	})
+</script>
+</html>
